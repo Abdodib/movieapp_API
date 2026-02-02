@@ -1,6 +1,6 @@
 import jwt, { SignOptions } from "jsonwebtoken";
 
-const generateToken = (userId: string): string => {
+export const generateToken = (userId: string): string => {
   if (!process.env.JWT_SECRET) {
     throw new Error("JWT_SECRET is not defined in .env");
   }
@@ -15,4 +15,4 @@ const generateToken = (userId: string): string => {
   return token;
 };
 
-export default generateToken;
+
