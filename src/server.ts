@@ -2,6 +2,7 @@ import express from 'express';
 import { config } from 'dotenv';
 import { Connectdb , Disconnectdb } from './dbConnector/db';
 import authRoute from './router/authRoute';
+import watchListRoute from './router/watchListRoute';
 
 const app = express();
 const port = 5000;
@@ -12,7 +13,7 @@ Connectdb();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/auth", authRoute);
-
+app.use("/watchlist", watchListRoute);
 
 const server = app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
