@@ -18,7 +18,7 @@ export const registerUser = async (req : any, res : any ) => {
         },
     });
 
-    const token = generateToken(newUser.id);
+    const token = generateToken(newUser.id , res);
     res.status(201).json({ message: "User registered successfully", userId: newUser.id , token });
 
 }
@@ -34,6 +34,14 @@ export const loginUser = async (req : any, res : any ) => {
         return res.status(400).json({ message: "Invalid email or password" });
     }
 
-    const token = generateToken(validEmail.id);
+    const token = generateToken(validEmail.id, res);
     res.status(200).json({ message: "Login successful", token });
+}
+
+export const logoutUser = async (req : any, res : any ) => {
+    res.cookie("jwt", "", {
+        httpOnly: true,
+        expires: new Date(0),
+    });
+    res.status(200).json({ message: "Logout successful" });  
 }

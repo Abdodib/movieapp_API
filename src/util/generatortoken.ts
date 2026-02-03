@@ -1,6 +1,6 @@
 import jwt, { SignOptions } from "jsonwebtoken";
 
-export const generateToken = (userId: string): string => {
+export const generateToken = (userId: string , res : any): string => {
   if (!process.env.JWT_SECRET) {
     throw new Error("JWT_SECRET is not defined in .env");
   }
@@ -12,6 +12,14 @@ export const generateToken = (userId: string): string => {
   };
 
   const token = jwt.sign(payload, process.env.JWT_SECRET, options);
+
+  res.cookie("jwt", token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    maxAge: ( 1000* 60 * 60 * 24 * 7 ),
+    sameSite: "strict",
+  });
+
   return token;
 };
 
